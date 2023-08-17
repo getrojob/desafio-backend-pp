@@ -29,4 +29,10 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/{document}")
+    public ResponseEntity<User> getUserByDocument(@RequestParam String doc) throws Exception {
+        User user = userService.findUserByDocument(doc);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 }
