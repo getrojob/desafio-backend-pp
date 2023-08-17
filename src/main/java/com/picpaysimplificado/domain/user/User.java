@@ -1,5 +1,6 @@
 package com.picpaysimplificado.domain.user;
 
+import com.picpaysimplificado.dtos.userDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +36,13 @@ public class User {
 
     private BigDecimal balance;
 
+    public User(userDTO data) {
+    this.firstName = data.firstName();
+    this.lastName = data.lastName();
+    this.document = data.document();
+    this.email = data.email();
+    this.password = data.password();
+    this.balance = data.balance();
+    this.type = data.type();
+    }
 }
