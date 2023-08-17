@@ -40,6 +40,7 @@ public class UserService {
 
     public User findUserByDocument(String document) throws Exception {
         LOGGER.log(Level.INFO, "Buscar por document");
+        //TODO - Validar se o document é um CPF ou CNPJ
         return this.repository.findUserByDocument(document).orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 
