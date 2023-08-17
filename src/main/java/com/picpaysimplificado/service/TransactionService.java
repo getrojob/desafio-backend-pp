@@ -37,6 +37,7 @@ public class TransactionService {
     final String apiUrl = "https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6";
 
     public Transaction createTransaction(TransactionDTO transaction) throws Exception {
+
         LOGGER.log(Level.INFO, "Localizando o user");
         User sender = this.userService.findUserById(transaction.senderId());
         LOGGER.log(Level.INFO, "Achei o Sender", sender.getFirstName() + " " + sender.getLastName());
@@ -61,22 +62,30 @@ public class TransactionService {
         newTransaction.setReceiver(recipient);
         newTransaction.setTimestamp(LocalDateTime.now());
 
-        LOGGER.log(Level.INFO, "Subtraindo o valor");
-        sender.setBalance(sender.getBalance().subtract(transaction.value()));
-        LOGGER.log(Level.INFO, "Adicionando o valor");
-        recipient.setBalance(recipient.getBalance().add(transaction.value()));
+        operationsFinance(transaction, sender, recipient);
 
         LOGGER.log(Level.INFO, "Salvando a transacao");
         this.transactionRepository.save(newTransaction);
         this.userService.saveUser(sender);
         this.userService.saveUser(recipient);
 
+        sendNotification(sender, recipient);
+
+        return newTransaction;
+    }
+
+    private void operationsFinance(TransactionDTO transaction, User sender, User recipient) {
+        LOGGER.log(Level.INFO, "Subtraindo o valor");
+        sender.setBalance(sender.getBalance().subtract(transaction.value()));
+        LOGGER.log(Level.INFO, "Adicionando o valor");
+        recipient.setBalance(recipient.getBalance().add(transaction.value()));
+    }
+
+    private void sendNotification(User sender, User recipient) throws Exception {
         LOGGER.log(Level.INFO, "Enviando notificacao de realizacao de transacao");
         this.notificationService.sendNotification(sender, "Transacao realizada com sucesso");
         LOGGER.log(Level.INFO, "Enviando notificacao de transacao recebida");
         this.notificationService.sendNotification(recipient, "Transacao recebida com sucesso");
-
-        return newTransaction;
     }
 
     public boolean authorizeTransaction(User sender, BigDecimal amount) {
