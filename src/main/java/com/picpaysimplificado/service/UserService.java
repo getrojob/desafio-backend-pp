@@ -7,11 +7,10 @@ import com.picpaysimplificado.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import java.math.BigDecimal;
 
 @Service
 public class UserService {
@@ -55,6 +54,7 @@ public class UserService {
         LOGGER.log(Level.INFO, "Buscando todos os users");
         return this.repository.findAll();
     }
+
     public void saveUser(User user) {
         LOGGER.log(Level.INFO, "Salvando na base");
         this.repository.save(user);

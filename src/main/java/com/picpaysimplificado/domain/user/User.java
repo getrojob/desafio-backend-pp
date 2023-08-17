@@ -37,12 +37,12 @@ public class User {
     private BigDecimal balance;
 
     public User(userDTO data) {
-    this.firstName = data.firstName();
-    this.lastName = data.lastName();
-    this.document = data.document();
-    this.email = data.email();
-    this.password = data.password();
-    this.balance = data.balance();
-    this.type = data.type();
+        this.firstName = data.firstName();
+        this.lastName = data.lastName();
+        this.document = data.document();
+        this.email = data.email();
+        this.password = data.password();
+        this.balance = data.balance();
+        this.type = data.type();
     }
 }

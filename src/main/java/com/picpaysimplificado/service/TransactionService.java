@@ -13,8 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.logging.Logger;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
