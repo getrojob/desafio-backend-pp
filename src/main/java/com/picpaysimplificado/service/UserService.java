@@ -38,6 +38,11 @@ public class UserService {
         return this.repository.findUserById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 
+    public User findUserByDocument(String document) throws Exception {
+        LOGGER.log(Level.INFO, "Buscar por document");
+        return this.repository.findUserByDocument(document).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    }
+
     public User createUser(userDTO data) {
         LOGGER.log(Level.INFO, "Criando user");
         User newUser = new User(data);
